@@ -60,29 +60,17 @@ cotz = [['Bitcoin_EUR', bitcoin_eur],
         ['Google', google],
         ['Microsoft', microsoft]]
 
-from pymongo import MongoClient
+from accesoWeb.DAOData import DAOData
 
-
-def getConnection():
-    mongoClient = MongoClient('localhost', port=27017)
-    db = mongoClient["tfmTelefonica"]
-    return db
-
-
-def saveData(collectionName, df):
-    # Obtenemos la conexion a la bbdd
-    connection = getConnection()
-
-    collection = connection[collectionName[0]]
-    collection.insert_many(df.to_dict("records"))
-
+database = DAOData("tfmTelefonica")
 
 n = 0
 for i in cotz:
     lista = carga_datos(cotz[n][1], cotz[n])
     df = DataFrame(lista).transpose()
     df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    saveData(cotz[n], df)
+    # ESTO TENDRIA QUE SER LA LLAMADA A UN DAO.
+    database.saveManyData(cotz[n], df)
     n = n + 1
 
 print("save its ok")
