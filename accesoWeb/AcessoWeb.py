@@ -15,7 +15,8 @@ def formato_fecha(fecha_amer):
 
 
 # proceso de carga inicial
-def carga_datos(empresa, fichero):
+def carga_datos(fichero, cotz):
+    nombreEmpresa = ""
     fecha = []
     abrir = []
     maximo = []
@@ -32,8 +33,9 @@ def carga_datos(empresa, fichero):
         cierre.append(fichero[0]['Close*'][x])
         cier_ajus.append(fichero[0]['Adj Close**'][x])
         volumen.append(fichero[0]['Volume'][x])
+        nombreEmpresa = cotz[0]
 
-    lista = [fecha, abrir, maximo, minimo, cierre, cier_ajus, volumen]
+    lista = [nombreEmpresa, fecha, abrir, maximo, minimo, cierre, cier_ajus, volumen]
     return lista
 
 
@@ -61,12 +63,27 @@ cotz = [['Bitcoin EUR', bitcoin_eur],
 n = 0
 lista_datos = []
 
-sep = '*******************************************'
 for i in cotz:
-    lista = carga_datos(cotz[n][0], cotz[n][1], )
+    lista = carga_datos(cotz[n][1], cotz[n])
     df = DataFrame(lista).transpose()
-    df.columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+    df.columns = ['Company name', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
     lista_datos.insert(n, df)
-    n = n + 1
+    n = +1
 
-print(lista_datos)
+# print(lista_datos)
+
+from pymongo import MongoClient
+
+
+def getConnection():
+    mongoClient = MongoClient('localhost', port=27017)
+    db = mongoClient["tfmTelefonica"]
+    return db
+
+
+# Obtenemos la conexion a la bbdd
+connection = getConnection()
+
+collection = connection["datasets"]
+for i in lista_datos:
+    collection.insert_many(i.to_dict("records"))
