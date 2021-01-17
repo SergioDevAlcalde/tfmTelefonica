@@ -16,7 +16,7 @@ def formato_fecha(fecha_amer):
 
 # proceso de carga inicial
 def carga_datos(fichero, cotz):
-    nombreEmpresa = ""
+    nombreEmpresa = []
     fecha = []
     abrir = []
     maximo = []
@@ -33,7 +33,7 @@ def carga_datos(fichero, cotz):
         cierre.append(fichero[0]['Close*'][x])
         cier_ajus.append(fichero[0]['Adj Close**'][x])
         volumen.append(fichero[0]['Volume'][x])
-        nombreEmpresa = cotz[0]
+        nombreEmpresa.append(cotz[0])
 
     lista = [nombreEmpresa, fecha, abrir, maximo, minimo, cierre, cier_ajus, volumen]
     return lista
@@ -53,24 +53,12 @@ facebook = pd.read_html('https://finance.yahoo.com/quote/FB/history?p=FB')
 google = pd.read_html('https://finance.yahoo.com/quote/GOOG/history?p=GOOG')
 microsoft = pd.read_html('https://finance.yahoo.com/quote/MSFT/history?p=MSFT')
 
-cotz = [['Bitcoin EUR', bitcoin_eur],
-        ['Bitcoin USD', bitcoin_usd],
+cotz = [['Bitcoin_EUR', bitcoin_eur],
+        ['Bitcoin_USD', bitcoin_usd],
         ['Amazon', amazon],
         ['Facebook', facebook],
         ['Google', google],
         ['Microsoft', microsoft]]
-
-n = 0
-lista_datos = []
-
-for i in cotz:
-    lista = carga_datos(cotz[n][1], cotz[n])
-    df = DataFrame(lista).transpose()
-    df.columns = ['Company name', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    lista_datos.insert(n, df)
-    n = +1
-
-# print(lista_datos)
 
 from pymongo import MongoClient
 
@@ -81,9 +69,20 @@ def getConnection():
     return db
 
 
-# Obtenemos la conexion a la bbdd
-connection = getConnection()
+def saveData(collectionName, df):
+    # Obtenemos la conexion a la bbdd
+    connection = getConnection()
 
-collection = connection["datasets"]
-for i in lista_datos:
-    collection.insert_many(i.to_dict("records"))
+    collection = connection[collectionName[0]]
+    collection.insert_many(df.to_dict("records"))
+
+
+n = 0
+for i in cotz:
+    lista = carga_datos(cotz[n][1], cotz[n])
+    df = DataFrame(lista).transpose()
+    df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+    saveData(cotz[n], df)
+    n = n + 1
+
+print("save its ok")
