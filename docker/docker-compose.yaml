@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  database:
+    container_name: mongoDB
+    ports:
+      - "27017:27017"
+    image: mongo
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=root"
+      - "MONGO_INITDB_ROOT_PASSWORD=1234"
+    volumes:
+      - "/d/dockers/data:/data/db"
+
+
