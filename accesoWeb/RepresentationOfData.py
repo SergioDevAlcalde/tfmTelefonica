@@ -50,7 +50,7 @@ def logicOfRepresentation(df_combinado):
             las casas de cambio, por lo que el valor asignado se corresponde'''
     for c in range(columnas):
         for f in range(filas):
-            if df_combinado_null.iloc[f, c] == True:
+            if df_combinado_null.iloc[f, c]:
                 df_combinado.iloc[f, c] = df_combinado.iloc[(f - 1), c]
             else:
                 df_combinado.iloc[f, c] = df_combinado.iloc[f, c]
