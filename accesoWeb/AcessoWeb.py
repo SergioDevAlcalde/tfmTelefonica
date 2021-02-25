@@ -70,7 +70,7 @@ for i in cotz:
     df = DataFrame(lista).transpose()
     df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
     # ESTO TENDRIA QUE SER LA LLAMADA A UN DAO.
-    database.saveManyData(cotz[n], df)
+    database.saveManyData(cotz[n][0], df)
     n = n + 1
 
 print("save its ok")

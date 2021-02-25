@@ -9,6 +9,8 @@ def representData():
     bitcoinEur = getDataByOneCollection("tfmTelefonica", "Bitcoin_EUR")
     bitcoinUSD = getDataByOneCollection("tfmTelefonica", "Bitcoin_USD")
 
+    #TODO MEJORAR A 7 DIAS VISTA. GUARDANDO CSV DE DATOS HASTA DIA DE HOY.-
+
     # Seleccionamos datos de interes
     goog_cierre = goog[["Date", "Close"]]
     fb_cierre = facebook[["Date", "Close"]]
@@ -24,7 +26,6 @@ def representData():
     btc_usd_cierre = btc_usd_cierre.rename(columns={"Close": "ClosBtcEur"})
 
     # Establecer el índice en la columna Date para cada archivo
-
     goog_cierre.set_index('Date', inplace=True)
     fb_cierre.set_index('Date', inplace=True)
     amzn_cierre.set_index('Date', inplace=True)

@@ -14,7 +14,7 @@ class DAOData:
         self.connection = DatabaseConnect.getConnection(databaseName)
 
     def saveManyData(self, collectionName, listToSave):
-        collection = self.connection[collectionName[0]]
+        collection = self.connection[collectionName]
         collection.insert_many(listToSave.to_dict("records"))
 
     def getOneCollectionNoId(self, collectionName):
