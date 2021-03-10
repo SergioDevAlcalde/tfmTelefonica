@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jan  7 18:22:37 2021
 
-@author: jogar
-"""
+
+"ESTE SCRIPT ESTA ENCARGADO DE RELLENAR LA BASE DE DATOS CON LA INFORMACION RECOGIDA."
 
 
 # cambio fecha a YYYY-MM-DD
@@ -39,38 +37,44 @@ def carga_datos(fichero, cotz):
     return lista
 
 
-import pandas as pd
-# Se leen los datos de yahoo
-from pandas import DataFrame
+def start():
+    import pandas as pd
+    # Se leen los datos de yahoo
+    from pandas import DataFrame
 
-# este código puede lanzarse cada día o cada cierto tiempo (hasta 99 laborables) accediendo primero a la bbdd y
-# recuperando fecha máxima
-# bitcoin_eur=pd.read_html('https://es.finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR')
-bitcoin_eur = pd.read_html('https://finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR')
-bitcoin_usd = pd.read_html('https://finance.yahoo.com/quote/BTC-USD/history?p=BTC-USD')
-amazon = pd.read_html('https://finance.yahoo.com/quote/AMZN/history?p=AMZN')
-facebook = pd.read_html('https://finance.yahoo.com/quote/FB/history?p=FB')
-google = pd.read_html('https://finance.yahoo.com/quote/GOOG/history?p=GOOG')
-microsoft = pd.read_html('https://finance.yahoo.com/quote/MSFT/history?p=MSFT')
+    # def start():
+    # este código puede lanzarse cada día o cada cierto tiempo (hasta 99 laborables) accediendo primero a la bbdd y
+    # recuperando fecha máxima
+    # bitcoin_eur=pd.read_html('https://es.finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR')
+    bitcoin_eur = pd.read_html('https://finance.yahoo.com/quote/BTC-EUR/history?p=BTC-EUR')
+    bitcoin_usd = pd.read_html('https://finance.yahoo.com/quote/BTC-USD/history?p=BTC-USD')
+    amazon = pd.read_html('https://finance.yahoo.com/quote/AMZN/history?p=AMZN')
+    facebook = pd.read_html('https://finance.yahoo.com/quote/FB/history?p=FB')
+    google = pd.read_html('https://finance.yahoo.com/quote/GOOG/history?p=GOOG')
+    microsoft = pd.read_html('https://finance.yahoo.com/quote/MSFT/history?p=MSFT')
 
-cotz = [['Bitcoin_EUR', bitcoin_eur],
-        ['Bitcoin_USD', bitcoin_usd],
-        ['Amazon', amazon],
-        ['Facebook', facebook],
-        ['Google', google],
-        ['Microsoft', microsoft]]
+    cotz = [['Bitcoin_EUR', bitcoin_eur],
+            ['Bitcoin_USD', bitcoin_usd],
+            ['Amazon', amazon],
+            ['Facebook', facebook],
+            ['Google', google],
+            ['Microsoft', microsoft]]
 
-from accesoWeb.DAOData import DAOData
+    from accesoWeb.DAOData import DAOData
 
-database = DAOData("tfmTelefonica")
+    database = DAOData("tfmTelefonica")
 
-n = 0
-for i in cotz:
-    lista = carga_datos(cotz[n][1], cotz[n])
-    df = DataFrame(lista).transpose()
-    df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    # ESTO TENDRIA QUE SER LA LLAMADA A UN DAO.
-    database.saveManyData(cotz[n][0], df)
-    n = n + 1
+    n = 0
+    for i in cotz:
+        lista = carga_datos(cotz[n][1], cotz[n])
+        df = DataFrame(lista).transpose()
+        df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+        # ESTO TENDRIA QUE SER LA LLAMADA A UN DAO.
+        database.saveManyData(cotz[n][0], df)
+        n = n + 1
 
-print("save its ok")
+    return True
+
+
+if start():
+    print("save its ok")
