@@ -38,16 +38,46 @@ for enum_emp in enumerate(list_emp):
     print(enum_emp)
 
 
-# In[5]:
+# In[25]:
 
 
 x=int(input("introduce número identificativo de criptomoneda de campo que quieres comparar==> "))
 print(list_emp[x])
+cryp = list_emp[x]
 
 
-# In[6]:
+# In[26]:
 
 
-for inst in mycol.find({"Desc":list_emp[x]},{"_id": 0,"Date":1,"Close":1}): 
-    print(inst) 
+datos=[]
+#for inst in mycol.find({"Desc":list_emp[x]},{"_id": 0,"Date":1,"Close":1}):  
+for inst in mycol.find({"Desc":list_emp[x]},{"_id": 0}):  
+    datos.append(inst)
+#    print(inst) 
+
+
+# In[35]:
+
+
+#datos
+from pandas import DataFrame 
+df_cryp = DataFrame (datos)
+df_cryp.sort_values(by="Date", ascending=False)
+df_cryp.head()
+
+
+# In[36]:
+
+
+df_cryp_cierre = df[["Date","Close"]]
+df_cryp_cierre = df_cryp_cierre.rename(columns = {"Close" : "Close"+cryp})
+df_cryp_cierre.set_index('Date', inplace = True)
+
+
+# In[37]:
+
+
+# a partir de aquí ya se puede acceder a código de Rubén, 
+# cambiando btc_usd_cierre  por df_cryp_cierre
+df_cryp_cierre.head()
 
