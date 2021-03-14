@@ -22,16 +22,18 @@ def carga_datos(fichero, cotz):
     cierre = []
     cier_ajus = []
     volumen = []
+
     for x in range(0, 100):
-        fec_amd = formato_fecha(fichero[0]['Date'][x].split())
-        fecha.append(fec_amd)
-        abrir.append(fichero[0]['Open'][x])
-        maximo.append(fichero[0]['High'][x])
-        minimo.append(fichero[0]['Low'][x])
-        cierre.append(fichero[0]['Close*'][x])
-        cier_ajus.append(fichero[0]['Adj Close**'][x])
-        volumen.append(fichero[0]['Volume'][x])
-        nombreEmpresa.append(cotz[0])
+        if not fichero[0]['Open'][x].endswith('Dividend'):
+            fec_amd = formato_fecha(fichero[0]['Date'][x].split())
+            fecha.append(fec_amd)
+            abrir.append(fichero[0]['Open'][x])
+            maximo.append(fichero[0]['High'][x])
+            minimo.append(fichero[0]['Low'][x])
+            cierre.append(fichero[0]['Close*'][x])
+            cier_ajus.append(fichero[0]['Adj Close**'][x])
+            volumen.append(fichero[0]['Volume'][x])
+            nombreEmpresa.append(cotz[0])
 
     lista = [nombreEmpresa, fecha, abrir, maximo, minimo, cierre, cier_ajus, volumen]
     return lista
@@ -70,6 +72,7 @@ def start():
         df = DataFrame(lista).transpose()
         df.columns = ['Company', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
         # ESTO TENDRIA QUE SER LA LLAMADA A UN DAO.
+
         database.saveManyData(cotz[n][0], df)
         n = n + 1
 
