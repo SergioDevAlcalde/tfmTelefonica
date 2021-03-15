@@ -37,4 +37,6 @@ Se necesita pymongo para acceder a la informacion de la base de datos. Con anaco
 conda install -c anaconda pymongo
 ```
 
-#FALTARIA COMO EJECUTAR EL MAIN DE PYTHON CON EL ALGORITMO DE ML. faltaria crearlo
+Para ejecutar la carga, ejecutariamos el scrip de pythgon de acceso-webv2.py. De esta forma ya tendriamos una primera carga de datos. 
+
+Luego tendriamos que ejecutar el cuaderno de jupyter e ir viendo los distintos grafos.

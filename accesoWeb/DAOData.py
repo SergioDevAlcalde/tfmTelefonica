@@ -27,3 +27,15 @@ class DAOData:
             collection = self.connection[i]
             listToReturn.append(collection.find({}, {"_id": 0}))
         return listToReturn
+
+    def deleteOne(self, collectionName, delt):
+        collection = self.connection[collectionName]
+        collection.delete_one(delt)
+
+    def aggregate(self, collectionName, query):
+        collection = self.connection[collectionName]
+        collection.aggregate(query)
+
+    def find(self, collectionName, borrado):
+        collection = self.connection[collectionName]
+        return collection.find(borrado)
