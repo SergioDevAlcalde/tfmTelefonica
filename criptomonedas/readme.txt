@@ -6,4 +6,4 @@ esta carpeta contiene :
 	- documento ANEXO explicativo
 	- presentación inicial
 
-*** la carga y acceso a MongoDB hay que cambiar los accesos, están las de "local" ( mi PC en este caso.
+*** en la carga de ficheros y los accesos a MongoDB hay que cambiarlos , están las direcciones y conexiones de "local" ( mi PC en este caso).
