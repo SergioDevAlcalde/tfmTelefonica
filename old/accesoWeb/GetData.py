@@ -1,6 +1,6 @@
 from pandas import DataFrame
 
-from accesoWeb.DAOData import DAOData
+from old.accesoWeb.DAOData import DAOData
 
 
 def getDataByOneCollection(databaseName, collectionName):

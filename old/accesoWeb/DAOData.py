@@ -1,5 +1,4 @@
-import accesoWeb.DatabaseConnect as DatabaseConnect
-from pymongo import MongoClient, errors
+import old.accesoWeb.DatabaseConnect as DatabaseConnect
 
 
 class DAOData:

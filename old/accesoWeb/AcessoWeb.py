@@ -62,7 +62,7 @@ def start():
             ['Google', google],
             ['Microsoft', microsoft]]
 
-    from accesoWeb.DAOData import DAOData
+    from old.accesoWeb.DAOData import DAOData
 
     database = DAOData("tfmTelefonica")
 

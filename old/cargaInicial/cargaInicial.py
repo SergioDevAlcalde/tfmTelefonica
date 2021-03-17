@@ -31,7 +31,7 @@ empresa = ['Bitcoin_EUR', 'Bitcoin_USD', 'Amazon', 'Facebook', 'Google', 'Micros
 carga_lista = []
 
 
-from accesoWeb.DAOData import DAOData
+from old.accesoWeb.DAOData import DAOData
 
 database = DAOData("tfmTelefonica")
 

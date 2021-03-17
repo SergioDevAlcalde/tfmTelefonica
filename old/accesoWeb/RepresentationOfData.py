@@ -1,4 +1,4 @@
-from accesoWeb.GetData import *
+from old.accesoWeb.GetData import *
 
 
 def representData():
